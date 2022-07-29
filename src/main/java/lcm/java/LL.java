@@ -1,7 +1,7 @@
 package lcm.java;
 
+import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * LinkedList alternative for L.
@@ -13,12 +13,12 @@ public class LL<T> extends L<T> {
     }
 
     /**
-     * Creates a new LL list with elements from other lists.
-     * @param lists lists to unpack into a single one.
+     * Creates a new LL list with elements from other collections.
+     * @param collection collection to unpack into a single one.
      */
     @SafeVarargs
-    public LL(List<T>... lists) {
-        super(lists);
+    public LL(Collection<T>... collections) {
+        super(collections);
     }
     
     /**
@@ -38,4 +38,5 @@ public class LL<T> extends L<T> {
     public LL(T... elements) {
         super(elements);
     }
+
 }

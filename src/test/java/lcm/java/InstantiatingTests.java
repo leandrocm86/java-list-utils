@@ -63,4 +63,14 @@ public class InstantiatingTests {
         assertEquals("a", l.get(0));
         assertEquals("b", l.get(1));
     }
+
+    @Test
+    public void testConstructorWithCollection() {
+        var set = new java.util.HashSet<String>();
+        set.add("a");
+        set.add("b");
+        var l = new L<String>(set);
+        assertEquals("a", l.get(0));
+        assertEquals("b", l.get(1));
+    }
 }
