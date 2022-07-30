@@ -11,14 +11,16 @@ public class AppTest {
     public static void main( String[] args )
     {
         var app = new AppTest();
-        app.benchmarkRank(5, generateNanos(10000000), 3);
-        app.benchmarkRank(5, generateRandoms(10000000), 3);
-        System.out.println("Highest from sequence...");
-        app.benchmarkHighest(5, generateSequence(10000000));
-        System.out.println("Lowest from sequence...");
-        app.benchmarkLowest(5, generateSequence(10000000));
-        System.out.println("Lowest from random...");
-        app.benchmarkLowest(5, generateRandoms(10000000));
+        // app.benchmarkRank(5, generateNanos(10000000), 3);
+        // app.benchmarkRank(5, generateRandoms(10000000), 3);
+        // System.out.println("Highest from sequence...");
+        // app.benchmarkHighest(5, generateSequence(10000000));
+        // System.out.println("Lowest from sequence...");
+        // app.benchmarkLowest(5, generateSequence(10000000));
+        // System.out.println("Lowest from random...");
+        // app.benchmarkLowest(5, generateRandoms(10000000));
+
+        app.benchmarkFilterRemoving(10000);
     }
 
     private void printSeparator() {
@@ -48,6 +50,12 @@ public class AppTest {
             arr[i] = rand.nextLong();
         }
         return arr;
+    }
+
+    private static void validate(boolean assertion) {
+        if (!assertion) {
+            throw new RuntimeException("Assertion failed");
+        }
     }
 
     private Comparator<Long> createComparator(int digitsToCompare) {
@@ -138,6 +146,32 @@ public class AppTest {
         System.out.println("Result: " + top);
         System.out.println("Result array: " + topArray);
         System.out.println("Result linked: " + topLinked);
+
+        printSeparator();
+    }
+
+    private void benchmarkFilterRemoving(int n) {
+        var l1 = new L<>(generateSequence(n));
+        var l2 = new L<>(generateSequence(n));
+        var ll1 = new LL<>(generateSequence(n));
+        var ll2 = new LL<>(generateSequence(n));
+        
+        long start = System.nanoTime();
+        var l3 = l1.filter(x -> x % 2 == 0);
+        l1.removeAll(l3);
+        System.out.println("Time for filtering L in 2 steps: " + (System.nanoTime() - start) / 1000000 + " ms");
+        start = System.nanoTime();
+        var l4 = l2.filterRemoving(x -> x % 2 == 0);
+        System.out.println("Time for filterRemoving L: " + (System.nanoTime() - start) / 1000000 + " ms");
+        start = System.nanoTime();
+        var ll3 = ll1.filter(x -> x % 2 == 0);
+        ll1.removeAll(ll3);
+        System.out.println("Time for filtering LL in 2 steps: " + (System.nanoTime() - start) / 1000000 + " ms");
+        start = System.nanoTime();
+        var ll4 = ll2.filterRemoving(x -> x % 2 == 0);
+        System.out.println("Time for filterRemoving LL: " + (System.nanoTime() - start) / 1000000 + " ms");
+        
+        validate(l1.equals(l2) && l3.equals(l4) && ll1.equals(ll2) && ll3.equals(ll4));
 
         printSeparator();
     }

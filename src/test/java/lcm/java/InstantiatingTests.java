@@ -73,4 +73,12 @@ public class InstantiatingTests {
         assertEquals("a", l.get(0));
         assertEquals("b", l.get(1));
     }
+
+    @Test
+    public void testFilterRemoving() {
+        var l = new L<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        var filtered = l.filterRemoving(i -> i % 2 == 0);
+        assertEquals(new L<Integer>(2, 4, 6, 8, 10), filtered);
+        assertEquals(new L<Integer>(1, 3, 5, 7, 9), l);
+    }
 }

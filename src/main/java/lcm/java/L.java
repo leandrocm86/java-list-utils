@@ -27,9 +27,17 @@ public class L<T> implements List<T> {
      * By default, a new ArrayList is used.
      */
     public L() {
-        this.list = new ArrayList<T>();
+        this.list = createList();
     }
     
+    protected List<T> createList() {
+        return new ArrayList<T>();
+    }
+
+    protected L<T> createL() {
+        return new L<T>();
+    }
+
     /**
      * Creates a new L object wrapping an existing list.
      * @param list the list to wrap.
@@ -228,6 +236,23 @@ public class L<T> implements List<T> {
      */
     public L<T> filter(Predicate<T> predicate) {
         return new L<T>(list.stream().filter(predicate).toList());
+    }
+
+    /**
+     * Extracts the elements of this list that satisfy the given predicate.
+     * @param predicate the predicate to use.
+     * @return a new L object with the removed elements from this list.
+     */
+    public L<T> filterRemoving(Predicate<T> predicate) {
+        L<T> out = createL();
+        for (Iterator<T> it = list.iterator(); it.hasNext();) {
+            T e = (T) it.next();
+            if (predicate.test(e)) {
+                out.add(e);
+                it.remove();
+            }
+        }
+        return out;
     }
 
     /**

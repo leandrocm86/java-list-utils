@@ -2,6 +2,7 @@ package lcm.java;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * LinkedList alternative for L.
@@ -10,6 +11,16 @@ import java.util.LinkedList;
 public class LL<T> extends L<T> {
     public LL() {
         super(new LinkedList<T>());
+    }
+
+    @Override
+    protected List<T> createList() {
+        return new LinkedList<T>();
+    }
+
+    @Override
+    protected L<T> createL() {
+        return new LL<T>();
     }
 
     /**
