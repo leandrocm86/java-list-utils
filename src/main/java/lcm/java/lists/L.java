@@ -1,4 +1,4 @@
-package lcm.java;
+package lcm.java.lists;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -253,6 +253,23 @@ public class L<T> implements List<T> {
             }
         }
         return out;
+    }
+
+    /**
+     * Splits the list into two other separate lists, according to the given predicate.
+     * The first list will contain the elements that satisfy the predicate,
+     * while the second will contain the elements that don't.
+     * If you wish to extract elements from this list itself, consider the filterRemoving method.
+     * @param predicate the predicate to use.
+     * @return a pair of L objects, the first one containing the elements that satisfy the predicate,
+     *        the second one containing the elements that don't.
+     * @see #filterRemoving(Predicate)
+     */
+    @SuppressWarnings("unchecked")
+    @Deprecated
+    public L<T>[] partitionBy(Predicate<? super T> predicate) {
+        var map = list.stream().collect(Collectors.partitioningBy(predicate));
+        return new L[] { new L<T>(map.get(true)), new L<T>(map.get(false)) };
     }
 
     /**

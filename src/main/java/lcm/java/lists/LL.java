@@ -1,4 +1,4 @@
-package lcm.java;
+package lcm.java.lists;
 
 import java.util.Collection;
 import java.util.LinkedList;

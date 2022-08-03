@@ -5,6 +5,8 @@ import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
+import lcm.java.lists.L;
+
 public class ComparisonTests {
 
     private class Foo {

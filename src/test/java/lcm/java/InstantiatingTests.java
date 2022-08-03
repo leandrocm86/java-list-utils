@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import lcm.java.lists.L;
+
 public class InstantiatingTests {
 
     @Test

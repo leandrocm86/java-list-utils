@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import lcm.java.lists.L;
+
 public class StreamTests {
 
     @Test
@@ -11,6 +13,14 @@ public class StreamTests {
         var l = new L<Integer>(1, 2, 3, 4, 5);
         var filtered = l.filter(i -> i % 2 == 0);
         assertEquals(new L<Integer>(2, 4), filtered);
+    }
+
+    @Test
+    public void testPartitionBy() {
+        var l = new L<Integer>(1, 2, 3, 4, 5);
+        var partitioned = l.partitionBy(i -> i % 2 == 0);
+        assertEquals(new L<Integer>(2, 4), partitioned[0]);
+        assertEquals(new L<Integer>(1, 3, 5), partitioned[1]);
     }
 
     @Test
