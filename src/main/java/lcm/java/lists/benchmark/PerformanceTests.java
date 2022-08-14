@@ -1,6 +1,6 @@
 package lcm.java.lists.benchmark;
 
-public class AppTest {
+public class PerformanceTests {
     public static void main( String[] args )
     {
         // System.out.println("Ranking from nanos...");
@@ -24,7 +24,16 @@ public class AppTest {
         // System.out.println("Benchmarking filterRmoving...");
         // new BenchFilterRemoving(10000).run();
 
-        System.out.println("Benchmarking partitionBy...");
-        new BenchPartitionBy(5000000).run();
+        // System.out.println("Benchmarking partitionBy...");
+        // new BenchPartitionBy(10000000).run();
+
+        // System.out.println("Benchmarking groupBy...");
+        // new BenchGroupBy(4000000).run();
+
+        // System.out.println("Benchmarking totalSize...");
+        // new BenchMLTotalSize(4000000).run();
+
+        // System.out.println("Benchmarking ML Rank...");
+        // new BenchMLRank(5000000).run();
     }
 }

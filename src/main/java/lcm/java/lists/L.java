@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
@@ -16,8 +15,9 @@ import java.util.stream.Collectors;
 /**
  * Wrapper for lists (java.util.List), adding new functionality and simplifying existing ones.
  * It decorates lists by implementing the List interface.
- * If no list is provided, an empty ArrayList is created.
- * A LinkedList may also be created by static builder methods.
+ * If no list is provided, a new ArrayList is used by default.
+ * A LinkedList may also be used with the LL class.
+ * @see LL
  */
 public class L<T> implements List<T> {
     protected List<T> list;
@@ -255,7 +255,7 @@ public class L<T> implements List<T> {
         return out;
     }
 
-    /**
+    /*
      * Splits the list into two other separate lists, according to the given predicate.
      * The first list will contain the elements that satisfy the predicate,
      * while the second will contain the elements that don't.
@@ -264,13 +264,13 @@ public class L<T> implements List<T> {
      * @return a pair of L objects, the first one containing the elements that satisfy the predicate,
      *        the second one containing the elements that don't.
      * @see #filterRemoving(Predicate)
-     */
+     
     @SuppressWarnings("unchecked")
     @Deprecated
     public L<T>[] partitionBy(Predicate<? super T> predicate) {
         var map = list.stream().collect(Collectors.partitioningBy(predicate));
         return new L[] { new L<T>(map.get(true)), new L<T>(map.get(false)) };
-    }
+    }*/
 
     /**
      * Gives the average of the elements of this list, given a criterion.
@@ -337,14 +337,16 @@ public class L<T> implements List<T> {
     }
 
     /**
-     * Groups the elements of this list by the given criterion into a Map of Lists.
-     * @param mapper the function to extract the key from each element.
+     * Groups the elements of this list by the given criterion into a Map of Lists (or multimap).
+     * The map of lists is returned in a ML wrapper, which is a utility class for multimaps.
+     * @param classifier the function to extract the key from each element.
+     * @return a map of lists (wrapped in a ML object) containing the grouped elements.
+     * @see ML
+     * @see Collectors#groupingBy(Function)
      */
-    public <K> Map<K, List<T>> groupBy(Function<T, K> classifier) {
-        return list.stream().collect(Collectors.groupingBy(classifier));
+    public <K> ML<K, T> groupBy(Function<T, K> classifier) {
+        return new ML<K, T>(list.stream().collect(Collectors.groupingBy(classifier)));
     }
-
-    // TODO: ML<K, T> toMap(classifier)
 
     /**
      * Overload of the sort(Comparator) method, with a null parameter.
