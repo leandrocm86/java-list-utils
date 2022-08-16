@@ -33,4 +33,19 @@ double averageAge = allCars.average(car -> car.getAge());
 
 // Similar to allCars.stream().mapToInt(car -> car.getAge()).max().getAsInt();
 int maxAge = allCars.maxInt(car -> car.getAge());
+
+// Similar to allCars.stream().map(car -> car.getName()).collect(Collectors.joining(", "));
+String cars = allCars.joinStrings(car -> car.getName(), ", ");
+
+// Similar to allCars.stream().collect(Collectors.groupingBy(car -> car.getOrigin()));
+// Actually a ML<String, Car> object is returned, which is a wrapper for map of lists with utility methods of its own.
+Map<String, List<Car>> carsByOrigin = allCars.groupBy(car -> car.getOrigin());
 ```
+
+- Selecting the top N elements according to a given comparator:
+
+```
+// Similar to sorting the list and getting the first 3 elements, but cleaner and more performatic.
+L<Car> oldestCars = cars.rank(3, (car1, car2) -> car2.getAge().compareTo(car1.getAge()));
+```
+
