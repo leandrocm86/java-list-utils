@@ -388,7 +388,7 @@ public class L<T> implements List<T> {
      * Assumes the element type implements the Comparable interface.
      * @param n the number of elements to return.
      * @throws ClassCastException if the element type is not Comparable.
-     * @see #top(int, Comparator)
+     * @see #rank(int, Comparator)
      */
     @SuppressWarnings("unchecked")
     public L<T> highest(int n) {
@@ -397,12 +397,22 @@ public class L<T> implements List<T> {
     }
 
     /**
+     * Returns the highest n elements of the list, sorted by the output of the given method (desc).
+     * Optimized for not having to sort the whole list.
+     * @param n the number of elements to return.
+     * @see #rank(int, Comparator)
+     */
+    public <C extends Comparable<C>> L<T> highestBy(Function<T, C> method, int n) {
+        return rank(n, Comparator.comparing(method).reversed());
+    }
+
+    /**
      * Returns the lowest n elements of the list, sorted by natural order (asc).
      * Optimized for not having to sort the whole list.
      * Assumes the element type implements the Comparable interface.
      * @param n the number of elements to return.
      * @throws ClassCastException if the element type is not Comparable.
-     * @see #top(int, Comparator)
+     * @see #rank(int, Comparator)
      */
     @SuppressWarnings("unchecked")
     public L<T> lowest(int n) {
@@ -410,6 +420,14 @@ public class L<T> implements List<T> {
         return rank(n, (Comparator<T>) Comparator.naturalOrder());
     }
 
-
+    /**
+     * Returns the lowest n elements of the list, sorted by the output of the given method.
+     * Optimized for not having to sort the whole list.
+     * @param n the number of elements to return.
+     * @see #rank(int, Comparator)
+     */
+    public <C extends Comparable<C>> L<T> lowestBy(Function<T, C> method, int n) {
+        return rank(n, Comparator.comparing(method));
+    }
 
 }

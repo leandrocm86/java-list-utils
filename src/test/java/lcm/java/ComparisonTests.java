@@ -10,9 +10,12 @@ import lcm.java.lists.L;
 public class ComparisonTests {
 
     private class Foo {
-        public int x;
-        public Foo(int x) {
+        int x;
+        Foo(int x) {
             this.x = x;
+        }
+        int getX() {
+            return x;
         }
         public boolean equals(Object o) {
             return o instanceof Foo ? x == ((Foo) o).x : false;
@@ -34,7 +37,6 @@ public class ComparisonTests {
         var l = new L<Foo>(new Foo(1), new Foo(2), new Foo(3), new Foo(4), new Foo(5));
         assertThrows(ClassCastException.class, () -> l.highest(2));
         assertThrows(ClassCastException.class, () -> l.lowest(2));
-
     }
 
     @Test
@@ -47,6 +49,13 @@ public class ComparisonTests {
     public void testLowest() {
         var l = new L<Integer>(1, 2, 3, 4, 5);
         assertEquals(new L<Integer>(1, 2), l.lowest(2));
+    }
+
+    @Test
+    public void testHighestByAndLowestBy() {
+        var l = new L<Foo>(new Foo(1), new Foo(2), new Foo(3), new Foo(4), new Foo(5));
+        assertEquals(new L<Foo>(new Foo(5), new Foo(4)), l.highestBy(Foo::getX, 2));
+        assertEquals(new L<Foo>(new Foo(1), new Foo(2)), l.lowestBy(Foo::getX, 2));
     }
     
 }

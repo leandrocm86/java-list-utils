@@ -42,10 +42,11 @@ String cars = allCars.joinStrings(car -> car.getName(), ", ");
 Map<String, List<Car>> carsByOrigin = allCars.groupBy(car -> car.getOrigin());
 ```
 
-- Selecting the top N elements according to a given comparator:
+- Selecting the top N elements according to a given method:
 
 ```
-// Similar to sorting the list and getting the first 3 elements, but cleaner and more performatic.
-L<Car> oldestCars = cars.rank(3, (car1, car2) -> car2.getAge().compareTo(car1.getAge()));
+// Similar to sorting the list with a custom comparator and getting the first 3 elements,
+// but cleaner and more performatic.
+L<Car> oldestCars = cars.highestBy(Car::getAge, 3);
 ```
 
